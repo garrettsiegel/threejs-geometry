@@ -51,7 +51,7 @@ geometry2.setAttribute("position", positionsAttribute2)
 
 const material1 = new THREE.PointsMaterial({
   color: debugObject.lineColor1,
-  size: 0.05,
+  size: 0.025,
 })
 const material2 = new THREE.MeshBasicMaterial({
   color: debugObject.lineColor2,
