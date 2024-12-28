@@ -2,9 +2,7 @@ import * as THREE from "three"
 import GUI from "lil-gui"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
-console.log(
-  "Add ?dev to show GUI options - https://threejs-geometry.vercel.app/?dev"
-)
+
 
 const gui = new GUI({ width: 300, title: "Options" })
 
@@ -12,6 +10,9 @@ if (window.location.href.endsWith("?dev")) {
   gui.show()
 } else {
   gui.hide()
+  console.log(
+    "Add ?dev to show GUI options - https://threejs-geometry.vercel.app/?dev"
+  )
 }
 
 const debugObject = {
