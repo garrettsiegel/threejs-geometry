@@ -2,8 +2,6 @@ import * as THREE from "three"
 import GUI from "lil-gui"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 
-
-
 const gui = new GUI({ width: 300, title: "Options" })
 
 if (window.location.href.endsWith("?dev")) {
@@ -20,6 +18,8 @@ const debugObject = {
   lineColor2: "#666",
   bgColor1: "#dd0000",
   bgColor2: "#000",
+  count1: 500,
+  count2: 50,
 }
 
 const canvas = document.querySelector("canvas.webgl")
@@ -31,28 +31,37 @@ scene.background = new THREE.Color(debugObject.bgColor1)
 const scene2 = new THREE.Scene()
 scene2.background = new THREE.Color(debugObject.bgColor2)
 
-const geometry = new THREE.BufferGeometry()
-const count = 50
-const positionsArray = new Float32Array(count * 3 * 3)
-for (let i = 0; i < count * 3 * 3; i++) {
-  positionsArray[i] = (Math.random() - 0.5) * 4
+const geometry1 = new THREE.BufferGeometry()
+const geometry2 = new THREE.BufferGeometry()
+const count1 = 500
+const count2 = 50
+const positionsArray1 = new Float32Array(count1 * 3 * 3)
+for (let i = 0; i < count1 * 3 * 3; i++) {
+  positionsArray1[i] = (Math.random() - 0.5) * 4
 }
-const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3)
-geometry.setAttribute("position", positionsAttribute)
+const positionsArray2 = new Float32Array(count2 * 3 * 3)
+for (let i = 0; i < count2 * 3 * 3; i++) {
+  positionsArray2[i] = (Math.random() - 0.5) * 4
+}
+const positionsAttribute1 = new THREE.BufferAttribute(positionsArray1, 3)
+const positionsAttribute2 = new THREE.BufferAttribute(positionsArray2, 3)
 
-const material1 = new THREE.MeshBasicMaterial({
+geometry1.setAttribute("position", positionsAttribute1)
+geometry2.setAttribute("position", positionsAttribute2)
+
+const material1 = new THREE.PointsMaterial({
   color: debugObject.lineColor1,
-  wireframe: true,
+  size: 0.05,
 })
 const material2 = new THREE.MeshBasicMaterial({
   color: debugObject.lineColor2,
   wireframe: true,
 })
 
-const mesh = new THREE.Mesh(geometry, material1)
+const mesh = new THREE.Points(geometry1, material1)
 scene.add(mesh)
 
-const mesh2 = new THREE.Mesh(geometry, material2)
+const mesh2 = new THREE.Mesh(geometry2, material2)
 scene2.add(mesh2)
 
 const sizes = {
@@ -127,6 +136,24 @@ folder1
   .name("Background color 1")
   .onChange(() => {
     scene.background.set(debugObject.bgColor1)
+  })
+folder1
+  .add(debugObject, "count1")
+  .min(150)
+  .max(2500)
+  .step(10)
+  .name("Amount of points")
+  .onChange(() => {
+    const newCount1 = debugObject.count1
+    const newPositions1 = new Float32Array(newCount1 * 3 * 3)
+    for (let i = 0; i < newCount1 * 3 * 3; i++) {
+      newPositions1[i] = (Math.random() - 0.5) * 4
+    }
+    geometry1.setAttribute(
+      "position",
+      new THREE.BufferAttribute(newPositions1, 3)
+    )
+    geometry1.attributes.position.needsUpdate = true
   })
 folder1.add(mesh.position, "x").min(-1).max(1).step(0.05).name("Mesh X pos")
 folder1.add(mesh.position, "y").min(-1).max(1).step(0.05).name("Mesh Y pos")
