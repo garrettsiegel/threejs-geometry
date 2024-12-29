@@ -127,13 +127,13 @@ tick()
 const folder1 = gui.addFolder("Canvas 1")
 folder1
   .addColor(debugObject, "lineColor1")
-  .name("Line color 1")
+  .name("Points color")
   .onChange(() => {
     material1.color.set(debugObject.lineColor1)
   })
 folder1
   .addColor(debugObject, "bgColor1")
-  .name("Background color 1")
+  .name("Bkgd color")
   .onChange(() => {
     scene.background.set(debugObject.bgColor1)
   })
@@ -142,7 +142,7 @@ folder1
   .min(150)
   .max(2500)
   .step(10)
-  .name("Amount of points")
+  .name("Number of points")
   .onChange(() => {
     const newCount1 = debugObject.count1
     const newPositions1 = new Float32Array(newCount1 * 3 * 3)
@@ -164,13 +164,13 @@ folder1.add(camera.position, "y").min(0).max(1).name("Camera Y pos")
 const folder2 = gui.addFolder("Canvas 2")
 folder2
   .addColor(debugObject, "lineColor2")
-  .name("Line color 2")
+  .name("Line color")
   .onChange(() => {
     material2.color.set(debugObject.lineColor2)
   })
 folder2
   .addColor(debugObject, "bgColor2")
-  .name("Background color 2")
+  .name("Bkgd color")
   .onChange(() => {
     scene2.background.set(debugObject.bgColor2)
   })
