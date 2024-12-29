@@ -31,3 +31,11 @@ canvas {
   height: auto;
   aspect-ratio: 1/1;
 }
+
+.lil-gui .title {
+  background-color: #666;
+}
+
+.lil-gui {
+  border: 2px solid #666;
+}
